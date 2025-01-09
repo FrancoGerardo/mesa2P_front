@@ -1,0 +1,259 @@
+<div class="bg-gray-50 min-h-screen p-8">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Crear Consulta Médica</h2>
+
+  <!-- Selección de Reserva con filtro aplicado -->
+  <div class="mb-6 bg-white p-6 rounded-lg shadow-lg">
+    <label for="reserva" class="block text-lg font-semibold text-gray-700 mb-2">Seleccionar Reserva:</label>
+    <div class="flex items-center mb-4">
+      <i class="fas fa-calendar-check text-gray-400 mr-3"></i>
+      <select id="reserva" (change)="onReservaChange($event)" [(ngModel)]="consulta.reservaId" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+        <option *ngFor="let reserva of reservas" [value]="reserva.reservaId">
+          Reserva #{{ reserva.reservaId }} - Paciente: {{ reserva.nombrePaciente }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Detalles de la Reserva Seleccionada -->
+    <div *ngIf="reservaSeleccionada" class="bg-gray-100 p-4 rounded-lg mt-4">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2">Detalles de la Reserva Seleccionada</h3>
+      <table class="table-auto w-full border border-gray-300">
+        <tr>
+          <th class="border px-4 py-2 font-medium text-left">Fecha de Reserva</th>
+          <td class="border px-4 py-2">{{ reservaSeleccionada.fechaReserva | date }}</td>
+        </tr>
+        <tr>
+          <th class="border px-4 py-2 font-medium text-left">Estado</th>
+          <td class="border px-4 py-2">{{ reservaSeleccionada.estado }}</td>
+        </tr>
+        <tr>
+          <th class="border px-4 py-2 font-medium text-left">Médico</th>
+          <td class="border px-4 py-2">{{ reservaSeleccionada.nombreMedico }} {{ reservaSeleccionada.apellidoMedico }}</td>
+        </tr>
+        <tr>
+          <th class="border px-4 py-2 font-medium text-left">Especialidad</th>
+          <td class="border px-4 py-2">{{ reservaSeleccionada.nombreEspecialidad }}</td>
+        </tr>
+        <tr>
+          <th class="border px-4 py-2 font-medium text-left">Hora de Inicio</th>
+          <td class="border px-4 py-2">{{ reservaSeleccionada.horaInicio }}</td>
+        </tr>
+        <tr>
+          <th class="border px-4 py-2 font-medium text-left">Hora de Fin</th>
+          <td class="border px-4 py-2">{{ reservaSeleccionada.horaFin }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Formulario de Consulta Médica -->
+  <div class="mb-8 bg-white p-6 rounded-lg shadow-lg">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Formulario de Consulta</h3>
+    <div class="space-y-4">
+      <div>
+        <label for="historiaId" class="block text-gray-700 font-semibold">Historia ID:</label>
+        <input type="number" id="historiaId" [(ngModel)]="consulta.historiaId" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Ingrese Historia ID" />
+      </div>
+      <div>
+        <label for="diagnostico" class="block text-gray-700 font-semibold">Diagnóstico:</label>
+        <input type="text" id="diagnostico" [(ngModel)]="consulta.diagnostico" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" />
+      </div>
+      <div>
+        <label for="tratamiento" class="block text-gray-700 font-semibold">Tratamiento:</label>
+        <input type="text" id="tratamiento" [(ngModel)]="consulta.tratamiento" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" />
+      </div>
+      <div>
+        <label for="notas" class="block text-gray-700 font-semibold">Notas:</label>
+        <textarea id="notas" [(ngModel)]="consulta.notas" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"></textarea>
+      </div>
+    </div>
+    <button (click)="saveConsulta()" class="mt-4 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300">Guardar Consulta</button>
+  </div>
+
+  <!-- Tabla de Consultas Médicas -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Consultas Médicas Registradas</h3>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+        <thead>
+          <tr class="bg-gray-100 text-gray-600 text-sm uppercase tracking-wider">
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Consulta ID</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Reserva ID</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Paciente</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Médico</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Fecha de Consulta</th>
+            <th class="py-4 px-6 text-center font-medium border-b border-gray-300">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consulta of consultas" class="hover:bg-gray-50 text-gray-800">
+            <td class="py-4 px-6 border-b border-gray-200">{{ consulta.consultaId }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ consulta.reservaId }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ consulta.nombrePaciente }} {{ consulta.apellidoPaciente }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ consulta.nombreMedico }} {{ consulta.apellidoMedico }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ consulta.fechaConsulta | date:'short' }}</td>
+            <td class="py-4 px-6 border-b border-gray-200 flex justify-center space-x-2">
+              <button (click)="openConsultaDetails(consulta)" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full shadow hover:bg-gray-200 transition duration-300 flex items-center space-x-1">
+                <i class="fas fa-eye"></i>
+                <span>Ver</span>
+              </button>
+              <button (click)="openCrearRecetaModal(consulta)" class="bg-green-100 text-green-600 px-4 py-2 rounded-full shadow hover:bg-green-200 transition duration-300 flex items-center space-x-1">
+                <i class="fas fa-file-medical"></i>
+                <span>Receta</span>
+              </button>
+              <button (click)="loadRecetaDetalles(consulta.consultaId)" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-full shadow hover:bg-blue-200 transition duration-300 flex items-center space-x-1">
+                <i class="fas fa-book-medical"></i>
+                <span>Ver Receta</span>
+              </button>
+              <button (click)="openLaboratorioModal(consulta.consultaId)" class="bg-yellow-100 text-yellow-600 px-4 py-2 rounded-full shadow hover:bg-yellow-200 transition duration-300 flex items-center space-x-1">
+                <i class="fas fa-vial"></i>
+                <span>Laboratorio</span>
+              </button>
+              <button (click)="openVerLaboratorioModal(consulta.consultaId)" class="bg-purple-100 text-purple-600 px-4 py-2 rounded-full shadow hover:bg-purple-200 transition duration-300 flex items-center space-x-1">
+                <i class="fas fa-vials"></i>
+                <span>Ver Lab</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modales -->
+
+  <!-- Modal para programar laboratorio -->
+  <div *ngIf="showLaboratorioModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div class="bg-white p-4 rounded shadow-lg w-1/2">
+      <h3 class="text-lg font-bold mb-4">Programar Laboratorio</h3>
+      <label for="tipoAnalisis" class="block text-gray-700 font-semibold">Tipo de Análisis:</label>
+      <input type="text" id="tipoAnalisis" [(ngModel)]="laboratorioSeleccionado.tipoAnalisis" class="w-full border rounded px-3 py-2" placeholder="Ingrese el tipo de análisis" />
+      <label for="descripcion" class="mt-2 block text-gray-700 font-semibold">Descripción:</label>
+      <textarea id="descripcion" [(ngModel)]="laboratorioSeleccionado.descripcion" class="w-full border rounded px-3 py-2"></textarea>
+      <label for="fechaProgramacion" class="mt-2 block text-gray-700 font-semibold">Fecha y Hora de Programación:</label>
+      <input type="datetime-local" id="fechaProgramacion" [(ngModel)]="laboratorioSeleccionado.fechaProgramacion" class="w-full border rounded px-3 py-2" />
+      <div class="flex mt-4">
+        <button (click)="programarLaboratorio()" class="bg-green-500 text-white px-4 py-2 rounded mt-4">Guardar</button>
+        <button (click)="closeLaboratorioModal()" class="bg-red-500 text-white px-4 py-2 rounded mt-4 ml-2">Cancelar</button>
+      </div>
+    </div>
+  </div>
+<!-- Modal para ver detalles del laboratorio -->
+<div *ngIf="showVerLaboratorioModal && laboratorioSeleccionado" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-4 rounded shadow-lg w-1/2">
+    <h3 class="text-lg font-bold mb-4">Detalles del Laboratorio</h3>
+    <p><strong>Tipo de Análisis:</strong> {{ laboratorioSeleccionado.tipoAnalisis }}</p>
+    <p><strong>Descripción:</strong> {{ laboratorioSeleccionado.descripcion }}</p>
+    <p><strong>Fecha Programada:</strong> {{ laboratorioSeleccionado.fechaProgramacion | date:'short' }}</p>
+    <button (click)="closeVerLaboratorioModal()" class="bg-red-500 text-white px-4 py-2 rounded mt-3">Cerrar</button>
+  </div>
+</div>
+
+<!-- Modal para Detalles de Consulta -->
+<div *ngIf="consultaSeleccionada" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-4 rounded shadow-lg w-1/2">
+    <h3 class="text-lg font-bold mb-4">Detalles de la Consulta</h3>
+    <p><strong>Consulta ID:</strong> {{ consultaSeleccionada.consultaId }}</p>
+    <p><strong>Reserva ID:</strong> {{ consultaSeleccionada.reservaId }}</p>
+    <p><strong>Paciente:</strong> {{ consultaSeleccionada.nombrePaciente }} {{ consultaSeleccionada.apellidoPaciente }}</p>
+    <p><strong>Médico:</strong> {{ consultaSeleccionada.nombreMedico }} {{ consultaSeleccionada.apellidoMedico }}</p>
+    <p><strong>Fecha de Consulta:</strong> {{ consultaSeleccionada.fechaConsulta | date:'short' }}</p>
+    <p><strong>Diagnóstico:</strong> {{ consultaSeleccionada.diagnostico }}</p>
+    <p><strong>Tratamiento:</strong> {{ consultaSeleccionada.tratamiento }}</p>
+    <p><strong>Notas:</strong> {{ consultaSeleccionada.notas }}</p>
+    <button (click)="closeConsultaDetails()" class="bg-red-500 text-white px-4 py-2 rounded mt-3">Cerrar</button>
+  </div>
+</div>
+<!-- Modal de creación de receta -->
+<div *ngIf="showRecetaModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-4 rounded shadow-lg w-1/2">
+    <h3 class="text-lg font-bold mb-4">Crear Receta</h3>
+    <!-- Instrucciones de la receta -->
+    <label for="instrucciones" class="block text-gray-700 font-semibold">Instrucciones:</label>
+    <textarea id="instrucciones" [(ngModel)]="recetaInstrucciones" class="w-full border rounded px-3 py-2"></textarea>
+    <!-- Botón para guardar receta -->
+    <button (click)="saveReceta()" class="bg-green-500 text-white px-4 py-2 rounded mt-4">Guardar Receta</button>
+  </div>
+</div>
+<!-- Modal para añadir medicamentos, solo visible después de crear la receta -->
+<div *ngIf="showRecetaMedicamentosModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-4 rounded shadow-lg w-1/2">
+    <h4 class="text-lg font-semibold mb-4">Añadir Medicamento</h4>
+    <label for="medicamento" class="block text-gray-700 font-semibold mb-2">Medicamento:</label>
+    <select [(ngModel)]="nuevoMedicamento.medicamentoId" id="medicamento" class="w-full border rounded px-3 py-2 mb-4">
+      <option *ngFor="let medicamento of medicamentos" [value]="medicamento.id">{{ medicamento.nombre }}</option>
+    </select>
+    <input type="text" placeholder="Dosis" [(ngModel)]="nuevoMedicamento.dosis" class="w-full border rounded px-3 py-2 mb-2" />
+    <input type="text" placeholder="Frecuencia" [(ngModel)]="nuevoMedicamento.frecuencia" class="w-full border rounded px-3 py-2 mb-2" />
+    <input type="number" placeholder="Duración (días)" [(ngModel)]="nuevoMedicamento.duracion" class="w-full border rounded px-3 py-2 mb-2" />
+    <button (click)="addMedicamentoToReceta()" class="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full">Añadir Medicamento</button>
+
+    <!-- Lista de medicamentos añadidos -->
+    <ul class="mt-4">
+      <li *ngFor="let med of recetaMedicamentos" class="border-b py-2">
+        <strong>Medicamento:</strong> {{ med.medicamentoId }}, <strong>Dosis:</strong> {{ med.dosis }}, <strong>Frecuencia:</strong> {{ med.frecuencia }}, <strong>Duración:</strong> {{ med.duracion }} días
+      </li>
+    </ul>
+
+    <!-- Botón para cerrar el modal de medicamentos -->
+    <button (click)="closeRecetaMedicamentosModal()" class="bg-red-500 text-white px-4 py-2 rounded mt-4 w-full">Cerrar</button>
+  </div>
+</div>
+<!-- Modal para ver detalles de la receta -->
+<div *ngIf="showRecetaDetallesModal && recetaDetalles" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-4 rounded shadow-lg w-3/4 overflow-y-auto max-h-screen">
+    <h3 class="text-lg font-bold mb-4">Detalles de las Recetas</h3>
+    <!-- Iteración sobre cada receta en recetaDetalles -->
+    <div *ngFor="let recetaDetalle of recetaDetalles; let i = index" class="border-b pb-4 mb-4">
+      <h4 class="text-lg font-semibold">Receta #{{ i + 1 }}</h4>
+      <p><strong>Fecha de Emisión:</strong> {{ recetaDetalle.fechaEmision | date:'short' }}</p>
+      <p><strong>Instrucciones:</strong> {{ recetaDetalle.instrucciones }}</p>
+      <p><strong>Diagnóstico:</strong> {{ recetaDetalle.diagnostico }}</p>
+      <p><strong>Tratamiento:</strong> {{ recetaDetalle.tratamiento }}</p>
+      <p><strong>Notas:</strong> {{ recetaDetalle.notas }}</p>
+      
+      <h4 class="mt-4">Detalles del Paciente</h4>
+      <p><strong>Nombre:</strong> {{ recetaDetalle.pacienteNombre }} {{ recetaDetalle.pacienteApellido }}</p>
+      
+      <h4 class="mt-4">Detalles del Médico</h4>
+      <p><strong>Nombre:</strong> {{ recetaDetalle.medicoNombre }} {{ recetaDetalle.medicoApellido }}</p>
+      <p><strong>Especialidad:</strong> {{ recetaDetalle.especialidadNombre }}</p>
+      
+      <h4 class="mt-4">Detalles de la Consulta</h4>
+      <p><strong>Día de Atención:</strong> {{ recetaDetalle.diaAtencion }}</p>
+      <p><strong>Hora de Inicio:</strong> {{ recetaDetalle.consultaHoraInicio }}</p>
+      <p><strong>Hora de Fin:</strong> {{ recetaDetalle.consultaHoraFinal }}</p>
+      
+      <h4 class="mt-4">Medicamentos Recetados</h4>
+      <table class="table-auto w-full border border-gray-300 mt-2">
+        <thead>
+          <tr>
+            <th class="border px-4 py-2">Medicamento</th>
+            <th class="border px-4 py-2">Dosis</th>
+            <th class="border px-4 py-2">Frecuencia</th>
+            <th class="border px-4 py-2">Duración</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="recetaDetalle.medicamentoNombre; else noMedicamentos">
+            <td class="border px-4 py-2">{{ recetaDetalle.medicamentoNombre }}</td>
+            <td class="border px-4 py-2">{{ recetaDetalle.medicamentoDosis }}</td>
+            <td class="border px-4 py-2">{{ recetaDetalle.medicamentoFrecuencia }}</td>
+            <td class="border px-4 py-2">{{ recetaDetalle.medicamentoDuracion }} días</td>
+          </tr>
+          <!-- Mostrar mensaje si no hay medicamentos -->
+          <ng-template #noMedicamentos>
+            <tr>
+              <td colspan="4" class="text-center border px-4 py-2">No hay medicamentos recetados</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+
+    <button (click)="closeRecetaDetallesModal()" class="bg-red-500 text-white px-4 py-2 rounded mt-3 w-full">Cerrar</button>
+  </div>
+</div>
+
+  <!-- Otros modales (Ver Laboratorio, Detalles de Consulta, Crear Receta, Añadir Medicamentos) -->
+  <!-- Resto de los modales aquí según tu estructura original, con el mismo diseño y clases para mantener consistencia. -->
+</div>

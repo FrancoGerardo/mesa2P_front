@@ -1,0 +1,15 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar: Oculto en pantallas pequeñas, visible en pantallas grandes -->
+  <app-sidebar ></app-sidebar>
+
+  <!-- Contenido Principal -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header: Siempre visible y ocupa todo el ancho en pantallas pequeñas -->
+    <app-header ></app-header>
+
+    <!-- Contenido con padding en pantallas grandes, sin overflow -->
+    <div class="flex-1 p-4 lg:p-6 overflow-auto bg-gray-50">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

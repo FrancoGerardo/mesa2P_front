@@ -1,0 +1,84 @@
+<div class="container mx-auto p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Crear Documento de Laboratorio</h2>
+
+  <!-- Selección de Laboratorio -->
+  <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+    <label for="laboratorioSelect" class="block text-gray-700 font-semibold mb-2">Seleccionar Laboratorio</label>
+    <select
+      id="laboratorioSelect"
+      [(ngModel)]="selectedLaboratorioId"
+      class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+      required
+    >
+      <option *ngFor="let laboratorio of laboratorios" [value]="laboratorio.id">
+        {{ laboratorio.descripcion }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Formulario de entrada de datos -->
+  <div class="bg-white p-6 rounded-lg shadow-lg">
+    <form (ngSubmit)="createDocumento()" class="space-y-4">
+      
+      <!-- Nombre del Archivo -->
+      <div>
+        <label for="nombreArchivo" class="block text-gray-700 font-semibold mb-2">Nombre del Archivo</label>
+        <input
+          type="text"
+          id="nombreArchivo"
+          [(ngModel)]="newDocumento.nombreArchivo"
+          name="nombreArchivo"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          placeholder="Ingrese el nombre del archivo"
+          required
+        />
+      </div>
+
+      <!-- Tipo de Documento -->
+      <div>
+        <label for="tipoDocumento" class="block text-gray-700 font-semibold mb-2">Tipo de Documento</label>
+        <input
+          type="text"
+          id="tipoDocumento"
+          [(ngModel)]="newDocumento.tipoDocumento"
+          name="tipoDocumento"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          placeholder="Ingrese el tipo de documento (por ejemplo, PDF, JPG, etc.)"
+          required
+        />
+      </div>
+
+      <!-- Ubicación del Archivo -->
+      <div>
+        <label for="ubicacionArchivo" class="block text-gray-700 font-semibold mb-2">Ubicación del Archivo</label>
+        <input
+          type="text"
+          id="ubicacionArchivo"
+          [(ngModel)]="newDocumento.ubicacionArchivo"
+          name="ubicacionArchivo"
+          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          placeholder="Ingrese la URL o ubicación del archivo"
+          required
+        />
+      </div>
+
+      <!-- Fecha de Realización (Automática) -->
+      <div>
+        <label class="block text-gray-700 font-semibold mb-2">Fecha de Realización</label>
+        <input
+          type="text"
+          [value]="fechaHoy | date: 'dd/MM/yyyy'"
+          class="w-full p-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600"
+          readonly
+        />
+      </div>
+
+      <!-- Botón de envío -->
+      <div class="mt-6">
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
+          Crear Documento
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

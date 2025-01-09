@@ -1,0 +1,259 @@
+String sql = "INSERT INTO Consultas_Medicas (reserva_id, historia_id, fecha_consulta, diagnostico, tratamiento, notas) VALUES (?, ?, ?, ?, ?, ?)";
+
+String sql = "INSERT INTO Documentos_Laboratorio (laboratorio_id, nombre_archivo, tipo_documento, ubicacion_archivo, fecha_realizacion) VALUES (?, ?, ?, ?, ?)";
+
+String sql = "INSERT INTO Especialidades (nombre, descripcion) VALUES (?, ?)";
+
+String sql = "INSERT INTO Evaluaciones (consulta_id, paciente_id, medico_id, especialidad_id, puntuacion, comentario) " +
+                     "VALUES (?, ?, ?, ?, ?, ?)";
+
+String sql = "INSERT INTO Historias_Clinicas (paciente_id, fecha_creacion) VALUES (?, ?)";
+
+String sql = """
+            INSERT INTO Horario_Medico_Especialidad (medico_id, especialidad_id, horario_id)
+            VALUES (?, ?, ?)
+            """;
+String sql = "INSERT INTO HORARIOS (dia_id, jornada_id) VALUES (?, ?)";
+
+String sql = "INSERT INTO JORNADA (nombre, hora_inicio, hora_final) VALUES (?, ?, ?)";
+
+String sql = "INSERT INTO Laboratorio (consulta_id, tipo_analisis, descripcion, fecha_programacion) VALUES (?, ?, ?, ?)";
+
+String sql = "INSERT INTO Medicamentos (nombre, descripcion) VALUES (?, ?)";
+
+String sql = "INSERT INTO Medicos_Especialidades (medico_id, especialidad_id) VALUES (?, ?)";
+
+String sql = "INSERT INTO Medicos (usuario_id, genero, fecha_nacimiento) VALUES (?, ?, ?)";
+
+String sql = "INSERT INTO MetodoDePago (nombre, descripcion) VALUES (?, ?)";
+
+String sql = "INSERT INTO Pacientes (usuario_id, fecha_nacimiento, genero, tipo_sangre) VALUES (?, ?, ?, ?)";
+
+String sql = """
+            INSERT INTO PagosSeguros (paciente_id, monto, fecha_pago, metodo_id, estado)
+            VALUES (?, ?, ?, ?, ?)
+        """;
+
+String sql = "INSERT INTO Permisos_Postergacion (medico_id, tipo_postergacion, fecha_inicio, hora_inicio, hora_fin, estado, motivo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+String sql = "INSERT INTO Permisos (nombre, descripcion) VALUES (?, ?)";
+
+String sql = "INSERT INTO Recetas_Medicamentos (receta_id, medicamento_id, dosis, frecuencia, duracion) VALUES (?, ?, ?, ?, ?)";
+
+String sql = "INSERT INTO Recetas (consulta_id, fecha_emision, instrucciones) VALUES (?, ?, ?)";
+
+String sql = "INSERT INTO Reservas (paciente_id, cupo_id, fecha_reserva, estado) VALUES (?, ?, ?, ?)";
+
+String sql = "INSERT INTO Roles_Permisos (rol_id, permiso_id) VALUES (?, ?)";
+
+String sql = "INSERT INTO Roles (nombre) VALUES (?)";
+
+
+ private RowMapper<User> rowMapper = (rs, rowNum) -> {
+        User user = new User();
+        user.setId(rs.getInt("usuario_id"));
+        user.setNombre(rs.getString("nombre"));
+        user.setApellido(rs.getString("apellido"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("password"));
+        user.setTelefono(rs.getString("telefono"));
+        user.setDireccion(rs.getString("direccion"));
+        user.setRolId(rs.getInt("rol_id"));
+        return user;
+    };
+String sql = "INSERT INTO Usuarios (nombre, apellido, email, password, telefono, direccion, rol_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+
+
+
+
+
+public DocumentosLaboratorio mapRow(ResultSet rs, int rowNum) throws SQLException {
+            DocumentosLaboratorio documento = new DocumentosLaboratorio();
+            documento.setId(rs.getInt("documento_id"));
+            documento.setLaboratorioId(rs.getInt("laboratorio_id"));
+            documento.setNombreArchivo(rs.getString("nombre_archivo"));
+            documento.setTipoDocumento(rs.getString("tipo_documento"));
+            documento.setUbicacionArchivo(rs.getString("ubicacion_archivo"));
+            documento.setFechaRealizacion(rs.getTimestamp("fecha_realizacion").toLocalDateTime());
+            return documento;
+        }
+
+public Cupo mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Cupo(
+                rs.getInt("id"),
+                rs.getInt("horario_medico_especialidad_id"),
+                rs.getString("hora_inicio"),
+                rs.getString("hora_final"),
+                rs.getString("estado")  // Nuevo campo estado
+            );
+        }
+
+public DocumentosLaboratorio mapRow(ResultSet rs, int rowNum) throws SQLException {
+            DocumentosLaboratorio documento = new DocumentosLaboratorio();
+            documento.setId(rs.getInt("documento_id"));
+            documento.setLaboratorioId(rs.getInt("laboratorio_id"));
+            documento.setNombreArchivo(rs.getString("nombre_archivo"));
+            documento.setTipoDocumento(rs.getString("tipo_documento"));
+            documento.setUbicacionArchivo(rs.getString("ubicacion_archivo"));
+            documento.setFechaRealizacion(rs.getTimestamp("fecha_realizacion").toLocalDateTime());
+            return documento;
+        }
+
+public Especialidad mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Especialidad especialidad = new Especialidad();
+            especialidad.setId(rs.getInt("especialidad_id"));
+            especialidad.setNombre(rs.getString("nombre"));
+            especialidad.setDescripcion(rs.getString("descripcion"));
+            return especialidad;
+        }
+
+public HistoriaClinica mapRow(ResultSet rs, int rowNum) throws SQLException {
+            HistoriaClinica historiaClinica = new HistoriaClinica();
+            historiaClinica.setId(rs.getInt("historia_id"));
+            historiaClinica.setPacienteId(rs.getInt("paciente_id"));
+            historiaClinica.setFechaCreacion(rs.getTimestamp("fecha_creacion").toLocalDateTime());
+            return historiaClinica;
+        }
+
+public HorarioMedicoEspecialidad mapRow(ResultSet rs, int rowNum) throws SQLException {
+            HorarioMedicoEspecialidad hme = new HorarioMedicoEspecialidad();
+            hme.setHorarioMedicoEspecialidadId(rs.getInt("horario_medico_especialidad_id"));
+            hme.setMedicoId(rs.getInt("medico_id"));
+            hme.setMedicoNombre(rs.getString("medico_nombre"));
+            hme.setMedicoApellido(rs.getString("medico_apellido"));
+            hme.setEspecialidadId(rs.getInt("especialidad_id"));
+            hme.setEspecialidadNombre(rs.getString("especialidad_nombre"));
+            hme.setHorarioId(rs.getInt("horario_id"));
+            hme.setDiaSemana(rs.getString("dia_semana"));
+            hme.setJornadaNombre(rs.getString("jornada_nombre"));
+            // Convert java.sql.Time to LocalTime
+            hme.setHoraInicio(rs.getTime("hora_inicio").toLocalTime());
+            hme.setHoraFin(rs.getTime("hora_fin").toLocalTime());
+            return hme;
+        }
+
+ public Horario mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Horario horario = new Horario();
+            horario.setId(rs.getInt("id"));
+            horario.setDiaId(rs.getInt("dia_id"));
+            horario.setJornadaId(rs.getInt("jornada_id"));
+            horario.setDiaSemana(rs.getString("dia_semana"));
+            horario.setJornadaNombre(rs.getString("jornada_nombre"));
+            horario.setHoraInicio(rs.getObject("hora_inicio", LocalTime.class));
+            horario.setHoraFinal(rs.getObject("hora_final", LocalTime.class));
+            return horario;
+        }
+
+public Jornada mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Jornada jornada = new Jornada();
+            jornada.setId(rs.getInt("id"));
+            jornada.setNombre(rs.getString("nombre"));
+            jornada.setHoraInicio(rs.getTime("hora_inicio").toLocalTime());
+            jornada.setHoraFinal(rs.getTime("hora_final").toLocalTime());
+            return jornada;
+        }
+
+public Laboratorio mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Laboratorio laboratorio = new Laboratorio();
+            laboratorio.setId(rs.getInt("laboratorio_id"));
+            laboratorio.setConsultaId(rs.getInt("consulta_id"));
+            laboratorio.setTipoAnalisis(rs.getString("tipo_analisis"));
+            laboratorio.setDescripcion(rs.getString("descripcion"));
+            laboratorio.setFechaProgramacion(rs.getTimestamp("fecha_programacion").toLocalDateTime());
+            return laboratorio;
+        }
+
+public Medicamento mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Medicamento medicamento = new Medicamento();
+            medicamento.setId(rs.getInt("medicamento_id"));
+            medicamento.setNombre(rs.getString("nombre"));
+            medicamento.setDescripcion(rs.getString("descripcion"));
+            return medicamento;
+        }
+
+public MedicoEspecialidad mapRow(ResultSet rs, int rowNum) throws SQLException {
+            MedicoEspecialidad me = new MedicoEspecialidad();
+            me.setMedicoId(rs.getInt("medico_id"));
+            me.setMedicoNombre(rs.getString("medico_nombre"));
+            me.setMedicoApellido(rs.getString("medico_apellido"));
+            me.setEspecialidadId(rs.getInt("especialidad_id"));
+            me.setEspecialidadNombre(rs.getString("especialidad_nombre"));
+            return me;
+        }
+
+ public Medico mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Medico medico = new Medico();
+            medico.setId(rs.getInt("medico_id"));
+            medico.setUsuarioId(rs.getInt("usuario_id"));
+            medico.setGenero(rs.getString("genero"));
+            medico.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());  // Convertir a LocalDate
+            return medico;
+        }
+
+public MetodoDePago mapRow(ResultSet rs, int rowNum) throws SQLException {
+            MetodoDePago metodoDePago = new MetodoDePago();
+            metodoDePago.setMetodoId(rs.getInt("metodo_id"));
+            metodoDePago.setNombre(rs.getString("nombre"));
+            metodoDePago.setDescripcion(rs.getString("descripcion"));
+            return metodoDePago;
+        }
+
+
+public Paciente mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Paciente paciente = new Paciente();
+            paciente.setId(rs.getInt("paciente_id"));
+            paciente.setUsuarioId(rs.getInt("usuario_id"));
+            paciente.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+            paciente.setGenero(rs.getString("genero"));
+            paciente.setTipoSangre(rs.getString("tipo_sangre"));
+            paciente.setNombre(rs.getString("nombre"));   // Mapear el nombre
+            paciente.setApellido(rs.getString("apellido")); // Mapear el apellido
+            return paciente;
+        }
+
+public PermisoPostergacion mapRow(ResultSet rs, int rowNum) throws SQLException {
+            PermisoPostergacion permiso = new PermisoPostergacion();
+            permiso.setPostergacionId(rs.getInt("postergacion_id"));
+            permiso.setMedicoId(rs.getInt("medico_id"));
+            permiso.setTipoPostergacion(rs.getString("tipo_postergacion"));
+            permiso.setFechaSolicitud(rs.getDate("fecha_solicitud"));
+            permiso.setFechaInicio(rs.getDate("fecha_inicio"));
+            permiso.setHoraInicio(rs.getTime("hora_inicio"));
+            permiso.setHoraFin(rs.getTime("hora_fin"));
+            permiso.setEstado(rs.getString("estado"));
+            permiso.setMotivo(rs.getString("motivo"));
+            return permiso;
+        }
+
+public Permiso mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Permiso permiso = new Permiso();
+            permiso.setId(rs.getInt("permiso_id"));
+            permiso.setNombre(rs.getString("nombre"));
+            permiso.setDescripcion(rs.getString("descripcion"));
+            return permiso;
+        }
+
+public RecetaMedicamento mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RecetaMedicamento recetaMedicamento = new RecetaMedicamento();
+            recetaMedicamento.setRecetaId(rs.getInt("receta_id"));
+            recetaMedicamento.setMedicamentoId(rs.getInt("medicamento_id"));
+            recetaMedicamento.setDosis(rs.getString("dosis"));
+            recetaMedicamento.setFrecuencia(rs.getString("frecuencia"));
+            recetaMedicamento.setDuracion(rs.getInt("duracion"));
+            return recetaMedicamento;
+        }
+
+public RolPermisos mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RolPermisos rolPermisos = new RolPermisos();
+            rolPermisos.setRolId(rs.getInt("rol_id"));
+            rolPermisos.setPermisoId(rs.getInt("permiso_id"));
+            return rolPermisos;
+        }
+
+public Rol mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Rol rol = new Rol();
+            rol.setId(rs.getInt("rol_id"));
+            rol.setNombre(rs.getString("nombre"));
+            return rol;
+        }

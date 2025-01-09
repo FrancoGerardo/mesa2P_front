@@ -1,0 +1,16 @@
+<header class="flex justify-end items-center p-4 bg-transparent w-full">
+    <!-- Icono de notificación con indicador de notificación -->
+    <div class="relative ml-4">
+        <i class="fas fa-bell text-gray-500 text-2xl hover:text-gray-700 cursor-pointer"></i>
+        <span class="absolute top-0 right-0 inline-block w-2.5 h-2.5 bg-red-500 rounded-full"></span>
+    </div>
+  
+    <!-- Saludo de bienvenida, icono de usuario y nombre de usuario -->
+    <div class="flex items-center space-x-3 ml-4">
+        <span class="text-blue-500 font-medium text-xl">
+            {{ user?.nombre || 'Usuario' }}
+        </span>
+        <i class="fas fa-user-circle text-blue-500 text-3xl"></i>
+    </div>
+  </header>
+  

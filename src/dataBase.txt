@@ -1,0 +1,232 @@
+public class ConsultaMedica {
+    private int consultaId;
+    private int reservaId;
+    private int historiaId;
+    private LocalDateTime fechaConsulta;
+    private String diagnostico;
+    private String tratamiento;
+    private String notas;
+}
+
+public class Cupo {
+    private int id;
+    private int horarioMedicoEspecialidadId;
+    private String horaInicio;
+    private String horaFin;
+    private String estado;  // Nuevo campo
+}
+
+public class Dia {
+    private int id;
+    private String diaSemana;
+}
+
+public class DocumentosLaboratorio {
+
+    private int id;
+    private int laboratorioId;
+    private String nombreArchivo;
+    private String tipoDocumento;
+    private String ubicacionArchivo;
+    private LocalDateTime fechaRealizacion;
+}
+
+public class Especialidad {
+
+    private int id;
+    private String nombre;
+    private String descripcion;
+}
+
+public class HistoriaClinica {
+
+    private int id;
+    private int pacienteId;
+    private LocalDateTime fechaCreacion;
+}
+
+public class HistoriaClinicaCompletaDTO {
+    private int pacienteId;
+    private String nombrePaciente;
+    private String apellidoPaciente;
+    private int historiaId;
+    private LocalDateTime fechaCreacionHistoria;
+    private int consultaId;
+    private LocalDateTime fechaConsulta;
+    private String diagnostico;
+    private String tratamiento;
+    private String notasConsulta;
+    private String medicamentosReceta;
+    private String laboratorios;
+}
+
+public class Horario {
+    private int id;
+    private int diaId;
+    private int jornadaId;
+
+    // Campos adicionales para representar detalles del día y jornada
+    private String diaSemana;
+    private String jornadaNombre;
+    private LocalTime horaInicio;
+    private LocalTime horaFinal;
+
+}
+
+public class HorarioMedicoEspecialidad {
+    private int horarioMedicoEspecialidadId;
+    private int medicoId;
+    private String medicoNombre;
+    private String medicoApellido;
+    private int especialidadId;
+    private String especialidadNombre;
+    private int horarioId;
+    private String diaSemana;
+    private String jornadaNombre;
+    private LocalTime horaInicio;  // Cambiado a LocalTime
+    private LocalTime horaFin;     // Cambiado a LocalTime
+}
+
+public class Jornada {
+    private int id;
+    private String nombre;
+    private LocalTime horaInicio;
+    private LocalTime horaFinal;
+}
+
+public class Laboratorio {
+
+    private int id;
+    private int consultaId;
+    private String tipoAnalisis;
+    private String descripcion;
+    private LocalDateTime fechaProgramacion;
+}
+
+public class Medicamento {
+
+    private int id;
+    private String nombre;
+    private String descripcion;
+}
+
+public class Medico {
+
+    private int id;
+    private int usuarioId;
+    private String genero;
+    private LocalDate fechaNacimiento;  // Cambiado a LocalDate
+    private String nombre; // Nuevo campo
+    private String apellido; // Nuevo campo
+}
+
+public class MedicoEspecialidad {
+    private int medicoId;
+    private String medicoNombre;
+    private String medicoApellido;
+    private int especialidadId;
+    private String especialidadNombre;
+}
+
+public class MetodoDePago {
+
+    private int metodoId; // Mapeo de la columna metodo_id
+    private String nombre; // Mapeo de la columna nombre
+    private String descripcion; // Mapeo de la columna descripcion
+}
+
+public class Paciente {
+
+    private int id;
+    private int usuarioId;
+    private LocalDate fechaNacimiento;
+    private String genero;
+    private String tipoSangre;  
+    private String nombre;       // Nuevo campo
+    private String apellido;     // Nuevo campo
+}
+
+public class PagoSeguro {
+
+    private int pagoId; // ID del pago
+    private int pacienteId; // ID del paciente
+    private double monto; // Monto del pago
+    private LocalDate fechaPago; // Fecha del pago
+    private LocalDate fechaVencimiento; // Fecha de vencimiento del seguro
+    private int metodoPagoId; // ID del método de pago
+    private String estado; // Estado del pago
+}
+
+public class Permiso {
+
+    private int id;  // Mapeo de la columna permiso_id
+    private String nombre;  // Mapeo de la columna nombre
+    private String descripcion;  // Mapeo de la columna descripcion
+}
+
+public class PermisoPostergacion {
+    private int postergacionId;
+    private int medicoId;
+    private String tipoPostergacion;
+    private Date fechaSolicitud;
+    private Date fechaInicio;
+    private Time horaInicio;
+    private Time horaFin;
+    private String estado;
+    private String motivo;
+}
+
+public class Receta {
+
+    private int id;
+    private int consultaId;
+    private LocalDateTime fechaEmision;
+    private String instrucciones;
+}
+
+public class RecetaMedicamento {
+
+    private int recetaId;
+    private int medicamentoId;
+    private String dosis;
+    private String frecuencia;
+    private int duracion;
+}
+
+public class Reserva {
+    private int reservaId;                 // ID de la reserva
+    private int pacienteId;                // ID del paciente
+    private String nombrePaciente;         // Nombre del paciente
+    private String apellidoPaciente;       // Apellido del paciente
+    private String estado;                 // Estado de la reserva (e.g., Reservada, Cancelada)
+    private LocalDate fechaReserva;        // Fecha de la reserva
+    private int cupoId;                    // ID del cupo
+    private LocalTime horaInicio;          // Hora de inicio del cupo
+    private LocalTime horaFin;             // Hora de fin del cupo
+    private String nombreMedico;           // Nombre del médico
+    private String apellidoMedico;         // Apellido del médico
+    private String especialidadMedico;     // Especialidad del médico
+}
+
+public class Rol {
+
+    private int id;  // Mapeo de la columna rol_id
+    private String nombre;  // Mapeo de la columna nombre
+}
+
+public class RolPermisos {
+
+    private int rolId;
+    private int permisoId;
+}
+
+public class User {
+    private int id;             // Mapea el campo usuario_id
+    private String nombre;       // Mapea el campo nombre
+    private String apellido;     // Mapea el campo apellido
+    private String email;        // Mapea el campo email
+    private String password;     // Mapea el campo password (renombrado de contraseña)
+    private String telefono;     // Mapea el campo telefono
+    private String direccion;    // Mapea el campo direccion
+    private Integer rolId;       // Mapea el campo rol_id, puede ser nulo si el rol no está asignado
+}

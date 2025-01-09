@@ -1,0 +1,95 @@
+<div class="container mx-auto p-8 bg-gray-50 min-h-screen">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Gestión de Permisos de Postergación</h2>
+  
+    <!-- Formulario de creación y edición de permisos -->
+    <form class="bg-white p-6 rounded-lg shadow-lg mb-8" (ngSubmit)="isEditing ? updatePermiso() : createPermiso()">
+      <h3 class="text-xl font-semibold text-gray-700 mb-4">{{ isEditing ? 'Editar Permiso' : 'Crear Permiso' }}</h3>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <label for="medicoId" class="block text-gray-700 font-semibold mb-2">Seleccione el Médico:</label>
+            <select [(ngModel)]="permiso.medicoId" name="medicoId" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+                <option *ngFor="let medico of medicos" [value]="medico.id">
+                    {{ medico.id}}
+                </option>
+            </select>
+        </div>
+  
+        <div>
+          <label for="tipoPostergacion" class="block text-gray-700 font-semibold mb-2">Tipo de Postergación:</label>
+          <select [(ngModel)]="permiso.tipoPostergacion" name="tipoPostergacion" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+            <option value="Por Hora">Por Hora</option>
+            <option value="Por Día">Por Día</option>
+          </select>
+        </div>
+  
+        <div>
+          <label for="fechaInicio" class="block text-gray-700 font-semibold mb-2">Fecha de Inicio:</label>
+          <input type="date" [(ngModel)]="permiso.fechaInicio" name="fechaInicio" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" />
+        </div>
+  
+        <div *ngIf="permiso.tipoPostergacion === 'Por Hora'">
+          <label for="horaInicio" class="block text-gray-700 font-semibold mb-2">Hora de Inicio:</label>
+          <input type="time" [(ngModel)]="permiso.horaInicio" name="horaInicio" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" />
+        </div>
+  
+        <div *ngIf="permiso.tipoPostergacion === 'Por Hora'">
+          <label for="horaFin" class="block text-gray-700 font-semibold mb-2">Hora de Fin:</label>
+          <input type="time" [(ngModel)]="permiso.horaFin" name="horaFin" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" />
+        </div>
+      </div>
+  
+      <div class="mt-4">
+        <label for="motivo" class="block text-gray-700 font-semibold mb-2">Motivo:</label>
+        <textarea [(ngModel)]="permiso.motivo" name="motivo" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Escribe el motivo de la postergación..."></textarea>
+      </div>
+  
+      <div class="flex space-x-4 mt-6">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">{{ isEditing ? 'Actualizar' : 'Crear' }} Permiso</button>
+        <button type="button" (click)="clearForm()" class="bg-gray-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-gray-600 transition duration-300">Cancelar</button>
+      </div>
+    </form>
+  
+    <!-- Tabla de permisos -->
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <h3 class="text-xl font-semibold text-gray-700 px-6 py-4 bg-gray-100">Lista de Permisos de Postergación</h3>
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+            <tr>
+              <th class="py-3 px-6 text-left font-medium">ID</th>
+              <th class="py-3 px-6 text-left font-medium">Médico</th>
+              <th class="py-3 px-6 text-left font-medium">Tipo</th>
+              <th class="py-3 px-6 text-left font-medium">Fecha Inicio</th>
+              <th class="py-3 px-6 text-left font-medium">Hora Inicio</th>
+              <th class="py-3 px-6 text-left font-medium">Hora Fin</th>
+              <th class="py-3 px-6 text-left font-medium">Estado</th>
+              <th class="py-3 px-6 text-left font-medium">Motivo</th>
+              <th class="py-3 px-6 text-left font-medium">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-700 text-sm font-light">
+            <tr *ngFor="let permiso of permisos" class="border-b border-gray-200 hover:bg-gray-100">
+              <td class="py-3 px-6">{{ permiso.postergacionId }}</td>
+              <td class="py-3 px-6">{{ permiso.medicoId }}</td>
+              <td class="py-3 px-6">{{ permiso.tipoPostergacion }}</td>
+              <td class="py-3 px-6">{{ permiso.fechaInicio | date }}</td>
+              <td class="py-3 px-6">{{ permiso.horaInicio }}</td>
+              <td class="py-3 px-6">{{ permiso.horaFin }}</td>
+              <td class="py-3 px-6">
+                <select [(ngModel)]="permiso.estado" (change)="changeEstado(permiso, permiso.estado)" class="w-full p-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+                  <option *ngFor="let estado of estadosDisponibles" [value]="estado">{{ estado }}</option>
+                </select>
+              </td>
+              <td class="py-3 px-6">{{ permiso.motivo }}</td>
+              <td class="py-3 px-6 flex space-x-2">
+                <button (click)="editPermiso(permiso)" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition duration-300">Editar</button>
+                <button (click)="deletePermiso(permiso.postergacionId)" class="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

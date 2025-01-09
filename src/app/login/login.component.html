@@ -1,0 +1,118 @@
+<div class="flex flex-col md:flex-row h-screen">
+  <!-- Sección Izquierda: Imagen del hospital -->
+  <div class="relative w-full md:w-2/3 h-64 md:h-full">
+    <img 
+      src="assets/hospital.jpeg" 
+      alt="Hospital" 
+      class="absolute inset-0 object-cover w-full h-full"
+    />
+    <!-- Superposición con gradiente -->
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-800 to-transparent opacity-75"></div>
+    <!-- Texto motivador -->
+    <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-8 md:px-16 lg:px-32 space-y-4">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold">
+        Cuidamos de tu salud
+      </h1>
+      <p class="text-base sm:text-lg lg:text-xl max-w-lg leading-relaxed">
+        Únete a nuestra comunidad y accede a los mejores servicios médicos, siempre con vos.
+      </p>
+    </div>
+  </div>
+
+  <!-- Sección Derecha: Formulario de Login -->
+  <div class="w-full md:w-1/2 flex items-center justify-center bg-gray-50 py-10 px-6 sm:px-12 lg:px-20">
+    <div class="w-full max-w-lg bg-gray-50 p-8">
+      <!-- Título principal -->
+      <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-900 text-center mb-8">
+        Bienvenido de nuevo
+      </h2>
+      <p class="text-lg lg:text-xl text-gray-700 text-center mb-10">
+        ¿Nuevo en SSVS? 
+        <a
+          routerLink="/register"
+          class="text-blue-600 font-semibold hover:text-blue-800 underline transition"
+        >
+          Regístrate aquí
+        </a>
+      </p>
+
+      <!-- Formulario -->
+      <form (submit)="onSubmit()" class="space-y-8">
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-lg lg:text-xl text-gray-700 font-medium mb-2">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Ingrese su email"
+            class="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg lg:text-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            required
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div>
+          <label for="password" class="block text-lg lg:text-xl text-gray-700 font-medium mb-2">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            id="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Ingrese su contraseña"
+            class="w-full px-5 py-4 border border-gray-300 rounded-lg text-lg lg:text-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            required
+          />
+        </div>
+
+        <!-- Botón de Inicio de Sesión -->
+        <button
+          type="submit"
+          class="w-full py-4 bg-blue-600 text-white rounded-lg text-lg lg:text-xl font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Iniciar sesión
+        </button>
+
+        <!-- Opciones adicionales -->
+        <div class="flex items-center justify-between mt-4">
+          <label class="inline-flex items-center">
+            <input
+              type="checkbox"
+              class="form-checkbox h-6 w-6 text-blue-600"
+            />
+            <span class="ml-2 text-lg lg:text-xl text-gray-700">Recuérdame</span>
+          </label>
+       
+        </div>
+
+        <!-- Opción de Acceso como Invitado -->
+        <div class="mt-8 text-center">
+          <a
+            routerLink="/guest-access"
+            class="text-blue-600 text-lg lg:text-xl font-semibold hover:text-blue-800 underline transition"
+          >
+            Accede como invitado
+          </a>
+        </div>
+      </form>
+
+      <!-- Footer -->
+      <div class="mt-12 text-center text-gray-600 text-base lg:text-lg">
+        <p>
+          ¿Necesitas ayuda? 
+          <a
+            routerLink="/contact"
+            class="text-blue-600 font-medium hover:text-blue-800 underline transition"
+          >
+            Contáctanos
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

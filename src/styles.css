@@ -1,0 +1,71 @@
+/* Global styles */
+@import 'ngx-toastr/toastr'; /* Path corregido para toastr.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Estilo de los toasts */
+/* Estilo base para los toasts */
+.toast {
+    border-radius: 8px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Toast de éxito */
+  .toast-success {
+    background-color: #4caf50 !important; /* Verde claro */
+    color: white !important;
+  }
+  
+  /* Toast de error */
+  .toast-error {
+    background-color: #f44336 !important; /* Rojo claro */
+    color: white !important;
+  }
+  
+  /* Toast de información */
+  .toast-info {
+    background-color: #2196f3 !important; /* Azul claro */
+    color: white !important;
+  }
+  
+  /* Toast de advertencia */
+  .toast-warning {
+    background-color: #ff9800 !important; /* Naranja claro */
+    color: white !important;
+  }
+  
+  /* Barra de progreso */
+  .toast-progress {
+    background: rgba(255, 255, 255, 0.8) !important;
+    height: 4px !important;
+  }
+  
+  /* Animación sutil para los toasts */
+  .toast {
+    animation: fadeInTop 0.5s, fadeOutTop 0.5s 2.5s;
+  }
+  
+  @keyframes fadeInTop {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeOutTop {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+  

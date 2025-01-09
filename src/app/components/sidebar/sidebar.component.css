@@ -1,0 +1,76 @@
+/* Sidebar */
+.sidebar {
+  width: 16rem; /* Ancho fijo para sidebar */
+  transform: translateX(-100%);
+  background-color: #ffffff;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  z-index: 40;
+}
+.sidebar.translate-x-0 {
+  transform: translateX(0);
+}
+
+/* Botón de hamburguesa */
+button.fixed {
+  z-index: 30; /* Detrás de la sidebar cuando está abierta */
+  transition: visibility 0.3s ease, opacity 0.3s ease;
+}
+button.invisible {
+  visibility: hidden; /* Oculta el botón detrás de la sidebar */
+  opacity: 0; /* Hace que desaparezca visualmente */
+}
+
+/* Encabezado */
+.bg-blue-600 {
+  background-color: #2563eb;
+}
+.text-white {
+  color: #ffffff;
+}
+
+/* Secciones */
+.sidebar-section-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  font-size: 1.15rem;
+  color: #4b5563;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.sidebar-section-header:hover {
+  background-color: #f1f5f9;
+  color: #2563eb;
+}
+
+/* Enlaces */
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 1rem;
+  color: #6b7280;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+.sidebar-link:hover {
+  background-color: #e0f2fe;
+  color: #2563eb;
+}
+.sidebar-link.active-link {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+/* Overlay */
+.bg-black.bg-opacity-50 {
+  backdrop-filter: blur(3px);
+}
+
+/* Responsive */
+@media (min-width: 1024px) {
+  .sidebar {
+    transform: translateX(0); /* Siempre visible en escritorio */
+  }
+}

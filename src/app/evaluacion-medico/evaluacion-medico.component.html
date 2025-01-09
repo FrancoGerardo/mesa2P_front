@@ -1,0 +1,96 @@
+<div class="container mx-auto p-6 bg-gray-50 min-h-screen">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Evaluación de Médico</h2>
+  
+    <form (ngSubmit)="guardarEvaluacion()" class="space-y-6 bg-white p-6 rounded-lg shadow-lg">
+      <!-- Selector de consulta -->
+      <div>
+        <label for="consulta" class="block text-gray-700 font-medium mb-2">Consulta</label>
+        <select
+          [(ngModel)]="nuevaEvaluacion.consultaId"
+          name="consulta"
+          class="w-full border rounded p-2"
+          (change)="onConsultaSeleccionada($event)"
+        >
+          <option *ngFor="let consulta of consultas" [value]="consulta.consultaId">
+            {{ consulta.consultaId }} - {{ consulta.fechaConsulta | date: 'short' }} 
+            (Paciente: {{ consulta.nombrePaciente }} {{ consulta.apellidoPaciente }})
+          </option>
+        </select>
+      </div>
+  
+      <!-- Puntuación -->
+      <div>
+        <label for="puntuacion" class="block text-gray-700 font-medium mb-2">Puntuación (1-5)</label>
+        <input
+          type="number"
+          id="puntuacion"
+          name="puntuacion"
+          min="1"
+          max="5"
+          [(ngModel)]="nuevaEvaluacion.puntuacion"
+          class="w-full border rounded p-2"
+          required
+        />
+      </div>
+  
+      <!-- Comentario -->
+      <div>
+        <label for="comentario" class="block text-gray-700 font-medium mb-2">Comentario</label>
+        <textarea
+          id="comentario"
+          name="comentario"
+          rows="4"
+          [(ngModel)]="nuevaEvaluacion.comentario"
+          class="w-full border rounded p-2"
+          required
+        ></textarea>
+      </div>
+  
+      <button
+        type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        [disabled]="isLoading"
+      >
+        Guardar Evaluación
+      </button>
+    </form>
+    <!-- src/app/evaluaciones-list/evaluaciones-list.component.html -->
+<div class="container mx-auto p-6 bg-gray-50 min-h-screen">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Lista de Evaluaciones</h2>
+  
+    <div *ngIf="isLoading" class="text-center text-gray-500">
+      <p>Cargando evaluaciones...</p>
+    </div>
+  
+    <div *ngIf="!isLoading && evaluaciones.length">
+      <table class="table-auto w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <thead class="bg-blue-600 text-white">
+          <tr>
+            <th class="px-4 py-2">Paciente</th>
+            <th class="px-4 py-2">Médico</th>
+            <th class="px-4 py-2">Especialidad</th>
+            <th class="px-4 py-2">Puntuación</th>
+            <th class="px-4 py-2">Comentario</th>
+            <th class="px-4 py-2">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let evaluacion of evaluaciones" class="hover:bg-gray-50">
+            <td class="border px-4 py-2">{{ evaluacion.nombrePaciente }} {{ evaluacion.apellidoPaciente }}</td>
+            <td class="border px-4 py-2">{{ evaluacion.nombreMedico }} {{ evaluacion.apellidoMedico }}</td>
+            <td class="border px-4 py-2">{{ evaluacion.nombreEspecialidad }}</td>
+            <td class="border px-4 py-2 text-center">{{ evaluacion.puntuacion }}</td>
+            <td class="border px-4 py-2">{{ evaluacion.comentario }}</td>
+            <td class="border px-4 py-2">{{ evaluacion.fechaEvaluacion | date: 'short' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="!isLoading && !evaluaciones.length" class="text-center text-gray-500">
+      <p>No hay evaluaciones registradas.</p>
+    </div>
+  </div>
+  
+  </div>
+  

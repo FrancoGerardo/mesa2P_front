@@ -1,0 +1,157 @@
+<div class="bg-gray-50 min-h-screen p-8">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 flex items-center space-x-3">
+      <i class="fas fa-calendar-check text-blue-700"></i>
+      <span>Gestión de Reservas</span>
+    </h1>
+  </div>
+
+  <!-- Formulario para crear una nueva reserva -->
+  <div class="mb-8 bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Crear Nueva Reserva</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      
+      <!-- Selección de Paciente -->
+      <div class="flex items-center transition-opacity duration-500" *ngIf="pacientes.length">
+        <label for="pacienteSelect" class="text-gray-700 font-semibold mr-4">Paciente</label>
+        <select
+          id="pacienteSelect"
+          [(ngModel)]="newReserva.pacienteId"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+        >
+          <option *ngFor="let paciente of pacientes" [value]="paciente.pacienteId">
+            {{ paciente.nombre }} {{ paciente.apellido }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Selección de Especialidad -->
+      <div class="flex items-center transition-opacity duration-500" *ngIf="newReserva.pacienteId">
+        <label for="especialidadSelect" class="text-gray-700 font-semibold mr-4">Especialidad</label>
+        <select
+          id="especialidadSelect"
+          [(ngModel)]="selectedEspecialidadId"
+          (change)="onEspecialidadChange()"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+        >
+          <option *ngFor="let especialidad of especialidades" [value]="especialidad.id">
+            {{ especialidad.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Selección de Médico (filtrado por especialidad) -->
+      <div class="flex items-center transition-opacity duration-500" *ngIf="selectedEspecialidadId && uniqueMedicos.length > 0">
+        <label for="medicoSelect" class="text-gray-700 font-semibold mr-4">Médico</label>
+        <select
+          id="medicoSelect"
+          [(ngModel)]="selectedMedicoId"
+          (change)="openCupoModal()"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+        >
+          <option *ngFor="let medico of uniqueMedicos" [value]="medico.medicoId">
+            Dr. {{ medico.medicoNombre }} {{ medico.medicoApellido }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Campo para seleccionar la Fecha de la Reserva -->
+      <div class="flex items-center transition-opacity duration-500" *ngIf="newReserva.cupoId">
+        <label for="fechaReserva" class="text-gray-700 font-semibold mr-4">Fecha de la Reserva</label>
+        <input
+          type="date"
+          id="fechaReserva"
+          [(ngModel)]="newReserva.fechaReserva"
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+        />
+      </div>
+    </div>
+
+    <div class="flex space-x-4 mt-6">
+      <button
+        (click)="createReserva()"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+      >
+        Crear Reserva
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de Reservas Existentes -->
+  <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Lista de Reservas</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+        <thead>
+          <tr class="bg-gray-100 text-gray-600 text-sm uppercase tracking-wider">
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Paciente</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Médico</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Especialidad</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Fecha</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Hora de Inicio</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Hora de Fin</th>
+            <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Estado</th>
+            <th class="py-4 px-6 text-center font-medium border-b border-gray-300">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reserva of reservas" class="hover:bg-gray-50 text-gray-800">
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.nombrePaciente }} {{ reserva.apellidoPaciente }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.nombreMedico }} {{ reserva.apellidoMedico }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.nombreEspecialidad }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.fechaReserva }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.horaInicio }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.horaFin }}</td>
+            <td class="py-4 px-6 border-b border-gray-200">{{ reserva.estado }}</td>
+            <td class="py-4 px-6 border-b border-gray-200 flex justify-center space-x-4">
+              <button
+                (click)="deleteReserva(reserva.reservaId!)"
+                class="flex items-center bg-red-100 text-red-600 px-4 py-2 rounded-full shadow hover:bg-red-200 transition duration-300 space-x-2"
+              >
+                <i class="fas fa-trash-alt"></i>
+                <span>Eliminar</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<!-- Modal para Selección de Cupos -->
+<div *ngIf="showCupoModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl max-h-full overflow-y-auto">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-2xl font-semibold text-gray-700">Seleccionar Cupo</h3>
+      <button (click)="closeCupoModal()" class="text-gray-400 hover:text-gray-600">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        *ngFor="let cupo of filteredCupos"
+        class="p-4 border rounded-lg transition duration-300"
+        [ngClass]="{ 'bg-gray-200 cursor-not-allowed': cupo.estado !== 'Disponible', 'bg-white hover:bg-blue-50 cursor-pointer': cupo.estado === 'Disponible' }"
+      >
+        <h4 class="font-semibold" [ngClass]="{ 'text-gray-500': cupo.estado !== 'Disponible', 'text-blue-600': cupo.estado === 'Disponible' }">
+          {{ cupo.diaSemana }}
+        </h4>
+        <p>Horario: {{ cupo.horaInicio }} - {{ cupo.horaFin }}</p>
+        <p>Jornada: {{ cupo.jornadaNombre }}</p>
+        <p>Estado: <span [class.text-red-500]="cupo.estado !== 'Disponible'" [class.text-green-600]="cupo.estado === 'Disponible'">{{ cupo.estado }}</span></p>
+
+        <!-- Botón para seleccionar cupo disponible -->
+        <button
+          *ngIf="cupo.estado === 'Disponible'"
+          (click)="selectCupo(cupo)"
+          class="mt-3 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 w-full"
+        >
+          Seleccionar
+        </button>
+
+        <!-- Texto de No Disponible para cupos ocupados -->
+        <p *ngIf="cupo.estado !== 'Disponible'" class="text-gray-500 text-center mt-2">No Disponible</p>
+      </div>
+    </div>
+  </div>
+</div>

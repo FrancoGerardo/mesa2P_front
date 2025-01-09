@@ -1,0 +1,52 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Historial de Bitácora</h1>
+
+  <!-- Filtros -->
+  <div class="flex flex-col sm:flex-row gap-4 mb-4">
+    <input
+      type="date"
+      class="border p-2 rounded-md"
+      [(ngModel)]="startDate"
+      (change)="filterRecords()"
+      placeholder="Fecha de inicio"
+    />
+    <input
+      type="date"
+      class="border p-2 rounded-md"
+      [(ngModel)]="endDate"
+      (change)="filterRecords()"
+      placeholder="Fecha de fin"
+    />
+    <button class="bg-gray-500 text-white px-4 py-2 rounded-md" (click)="resetFilters()">Resetear Filtros</button>
+    <button class="bg-green-500 text-white px-4 py-2 rounded-md" (click)="exportToExcel()">Exportar a Excel</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-md" (click)="exportToPDF()">Exportar a PDF</button>
+  </div>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto">
+    <table class="table-auto border-collapse border border-gray-300 w-full text-sm">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="border border-gray-300 px-4 py-2">#</th>
+          <th class="border border-gray-300 px-4 py-2">Usuario</th>
+          <th class="border border-gray-300 px-4 py-2">Acción</th>
+          <th class="border border-gray-300 px-4 py-2">Tabla</th>
+          <th class="border border-gray-300 px-4 py-2">Detalle</th>
+          <th class="border border-gray-300 px-4 py-2">IP</th>
+          <th class="border border-gray-300 px-4 py-2">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bitacora of filteredBitacoras; let i = index">
+          <td class="border border-gray-300 px-4 py-2">{{ i + 1 }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ bitacora.usuario_id || 'N/A' }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ bitacora.accion }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ bitacora.tabla }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ bitacora.detalle }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ bitacora.ip || 'N/A' }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ bitacora.fecha | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

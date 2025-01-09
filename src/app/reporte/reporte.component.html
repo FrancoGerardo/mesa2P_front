@@ -1,0 +1,94 @@
+<div class="container mx-auto px-4 py-6">
+    <h2 class="text-2xl font-bold mb-4">Reporte de Consultas Médicas</h2>
+  
+    <!-- Filtros -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+      <div>
+        <label class="block text-gray-700">Fecha de inicio</label>
+        <input
+          type="date"
+          class="border border-gray-300 rounded w-full py-2 px-3"
+          [(ngModel)]="startDate"
+          (change)="filterRecords()"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700">Fecha de fin</label>
+        <input
+          type="date"
+          class="border border-gray-300 rounded w-full py-2 px-3"
+          [(ngModel)]="endDate"
+          (change)="filterRecords()"
+        />
+      </div>
+      <div class="flex items-end">
+        <button
+          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          (click)="resetFilters()"
+        >
+          Resetear Filtros
+        </button>
+      </div>
+      <div class="flex items-end">
+        <button
+          class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          (click)="exportToPDF()"
+        >
+          Exportar a PDF
+        </button>
+        <button
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 ml-2"
+          (click)="exportToExcel()"
+        >
+          Exportar a Excel
+        </button>
+      </div>
+    </div>
+  
+    <!-- Selección de columnas -->
+    <div class="mb-4">
+      <h4 class="text-lg font-semibold mb-2">Selecciona las columnas para exportar</h4>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <label *ngFor="let column of columns" class="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            [(ngModel)]="column.selected"
+            class="form-checkbox text-blue-600"
+          />
+          <span>{{ column.label }}</span>
+        </label>
+      </div>
+    </div>
+  
+    <!-- Tabla -->
+    <div class="overflow-auto">
+      <table class="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-teal-500 text-white">
+            <th
+              *ngFor="let column of columns"
+              [hidden]="!column.selected"
+              class="px-4 py-2 border border-gray-300"
+            >
+              {{ column.label }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let reporte of filteredReportes"
+            class="hover:bg-gray-100"
+          >
+            <td
+              *ngFor="let column of columns"
+              [hidden]="!column.selected"
+              class="px-4 py-2 border border-gray-300"
+            >
+              {{ reporte[column.dataKey] || 'N/A' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

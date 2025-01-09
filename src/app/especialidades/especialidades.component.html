@@ -1,0 +1,85 @@
+<div class="bg-gray-50 min-h-screen p-8">
+  <div class="flex justify-between items-center mb-8">
+      <h1 class="text-4xl font-bold text-gray-800 flex items-center space-x-3">
+          <i class="fas fa-stethoscope text-blue-700"></i>
+          <span>Especialidad Management</span>
+      </h1>
+  </div>
+
+  <!-- Formulario para crear o editar especialidad -->
+  <div class="mb-8 bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">
+          {{ editingEspecialidad ? 'Edit Especialidad' : 'Add New Especialidad' }}
+      </h2>
+
+      <div class="flex items-center mb-4">
+          <input
+              type="text"
+              placeholder="Nombre de la Especialidad"
+              [(ngModel)]="selectedEspecialidad.nombre"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          />
+      </div>
+      <div class="flex items-center mb-4">
+          <textarea
+              placeholder="Descripción"
+              [(ngModel)]="selectedEspecialidad.descripcion"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+          ></textarea>
+      </div>
+
+      <div class="flex space-x-4 mt-6">
+          <button
+              (click)="editingEspecialidad ? updateEspecialidad() : createEspecialidad()"
+              class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300"
+          >
+              {{ editingEspecialidad ? 'Update Especialidad' : 'Add Especialidad' }}
+          </button>
+          <button
+              *ngIf="editingEspecialidad"
+              (click)="cancelEdit()"
+              class="w-full bg-gray-300 text-gray-700 py-3 rounded-lg hover:bg-gray-400 transition duration-300"
+          >
+              Cancel
+          </button>
+      </div>
+  </div>
+
+  <!-- Tabla de especialidades -->
+  <div class="bg-white rounded-lg shadow-lg p-6">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Especialidades List</h2>
+      <div class="overflow-x-auto">
+          <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+              <thead>
+                  <tr class="bg-gray-100 text-gray-600 text-sm uppercase tracking-wider">
+                      <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Nombre</th>
+                      <th class="py-4 px-6 text-left font-medium border-b border-gray-300">Descripción</th>
+                      <th class="py-4 px-6 text-center font-medium border-b border-gray-300">Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let especialidad of especialidades" class="hover:bg-gray-50 text-gray-800">
+                      <td class="py-4 px-6 border-b border-gray-200">{{ especialidad.nombre }}</td>
+                      <td class="py-4 px-6 border-b border-gray-200">{{ especialidad.descripcion }}</td>
+                      <td class="py-4 px-6 border-b border-gray-200 flex justify-center space-x-4">
+                          <button
+                              (click)="editEspecialidad(especialidad)"
+                              class="flex items-center bg-blue-100 text-blue-600 px-4 py-2 rounded-full shadow hover:bg-blue-200 transition duration-300 space-x-2"
+                          >
+                              <i class="fas fa-edit"></i>
+                              <span>Edit</span>
+                          </button>
+                          <button
+                              (click)="deleteEspecialidad(especialidad.id!)"
+                              class="flex items-center bg-red-100 text-red-600 px-4 py-2 rounded-full shadow hover:bg-red-200 transition duration-300 space-x-2"
+                          >
+                              <i class="fas fa-trash-alt"></i>
+                              <span>Delete</span>
+                          </button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
