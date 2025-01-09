@@ -7,7 +7,7 @@ import { Bitacora } from '../models/bitacora.model';
   providedIn: 'root'
 })
 export class BitacoraService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/bitacora';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/bitacora';
 
   constructor(private http: HttpClient) {}
 

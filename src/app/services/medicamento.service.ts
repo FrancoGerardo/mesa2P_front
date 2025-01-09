@@ -7,7 +7,7 @@ import { Medicamento } from '../models/medicamento.model';
   providedIn: 'root'
 })
 export class MedicamentoService {
-  private baseUrl = 'http://mesa2p2-production.up.railway.app/api/medicamentos';
+  private baseUrl = 'https://mesa2p2-production.up.railway.app/api/medicamentos';
 
   constructor(private http: HttpClient) {}
 

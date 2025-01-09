@@ -8,7 +8,7 @@ import { MedicoEspecialidad } from '../models/medico-especialidad.model';
   providedIn: 'root'
 })
 export class MedicoEspecialidadService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/medico-especialidad';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/medico-especialidad';
 
   constructor(private http: HttpClient) {}
 

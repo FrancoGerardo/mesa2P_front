@@ -9,7 +9,7 @@ import { Cupo } from '../models/cupo.model';
   providedIn: 'root'
 })
 export class CupoService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/cupos';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/cupos';
 
   constructor(private http: HttpClient) {}
 

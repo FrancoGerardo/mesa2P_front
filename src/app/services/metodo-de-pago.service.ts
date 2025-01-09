@@ -7,7 +7,7 @@ import { MetodoDePago } from '../models/metodo-de-pago.model';
   providedIn: 'root',
 })
 export class MetodoDePagoService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/metodos-de-pago';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/metodos-de-pago';
 
   constructor(private http: HttpClient) {}
 

@@ -8,7 +8,7 @@ import { ConsultaMedica } from '../models/consulta-medica.model';
   providedIn: 'root'
 })
 export class ConsultaMedicaService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/consultas'; // URL definida directamente
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/consultas'; // URL definida directamente
 
   constructor(private http: HttpClient) {}
 

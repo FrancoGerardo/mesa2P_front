@@ -7,7 +7,7 @@ import { PermisoPostergacion } from '../models/permiso-postergacion.model';
     providedIn: 'root'
 })
 export class PermisoPostergacionService {
-    private apiUrl = 'http://mesa2p2-production.up.railway.app/api/permisos-postergacion';
+    private apiUrl = 'https://mesa2p2-production.up.railway.app/api/permisos-postergacion';
 
     constructor(private http: HttpClient) {}
 

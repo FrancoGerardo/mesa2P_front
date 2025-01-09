@@ -7,7 +7,7 @@ import { Especialidad } from '../models/especialidad.model';
   providedIn: 'root'
 })
 export class EspecialidadService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/especialidades';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/especialidades';
 
   constructor(private http: HttpClient) {}
 

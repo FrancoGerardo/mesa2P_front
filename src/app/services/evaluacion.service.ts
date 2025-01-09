@@ -8,7 +8,7 @@ import { Evaluacion } from '../models/evaluacion.model';
   providedIn: 'root',
 })
 export class EvaluacionService {
-  private readonly apiUrl = 'http://mesa2p2-production.up.railway.app/api/evaluaciones';
+  private readonly apiUrl = 'https://mesa2p2-production.up.railway.app/api/evaluaciones';
 
   constructor(private http: HttpClient) {}
 

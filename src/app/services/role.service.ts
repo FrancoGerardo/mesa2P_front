@@ -7,7 +7,7 @@ import { Role } from '../models/role.model';
   providedIn: 'root'
 })
 export class RoleService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/roles';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/roles';
 
   constructor(private http: HttpClient) {}
 

@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ReservaService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/reservas';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/reservas';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

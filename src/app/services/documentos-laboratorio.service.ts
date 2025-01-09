@@ -8,8 +8,8 @@ import { DocumentosLaboratorio } from '../models/documentos-laboratorio.model';
   providedIn: 'root'
 })
 export class DocumentosLaboratorioService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/documentos-laboratorio';
-  private laboratoriosUrl = 'http://mesa2p2-production.up.railway.app/api/laboratorio'; // Endpoint para cargar laboratorios
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/documentos-laboratorio';
+  private laboratoriosUrl = 'https://mesa2p2-production.up.railway.app/api/laboratorio'; // Endpoint para cargar laboratorios
 
   constructor(private http: HttpClient) {}
 

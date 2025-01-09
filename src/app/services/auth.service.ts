@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/auth'; 
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/auth'; 
   private tokenKey = 'token';
 
   constructor(private http: HttpClient) {}

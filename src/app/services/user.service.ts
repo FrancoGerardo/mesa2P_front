@@ -8,7 +8,7 @@ import { User } from '../models/user.model';
 })
 export class UserService {
  
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/usuarios';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/usuarios';
 
   constructor(private http: HttpClient) {}
 

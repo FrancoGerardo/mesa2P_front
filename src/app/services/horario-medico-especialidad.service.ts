@@ -8,7 +8,7 @@ import { HorarioMedicoEspecialidad } from '../models/horario-medico-especialidad
   providedIn: 'root'
 })
 export class HorarioMedicoEspecialidadService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/horario-medico-especialidad';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/horario-medico-especialidad';
 
   constructor(private http: HttpClient) {}
 

@@ -8,7 +8,7 @@ import { Receta } from '../models/receta.model';
     providedIn: 'root'
 })
 export class RecetaService {
-    private apiUrl = 'http://mesa2p2-production.up.railway.app/api/recetas'; // URL del backend
+    private apiUrl = 'https://mesa2p2-production.up.railway.app/api/recetas'; // URL del backend
 
     constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { Dia } from '../models/dia.model';
   providedIn: 'root'
 })
 export class DiaService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/dias';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/dias';
 
   constructor(private http: HttpClient) {}
 

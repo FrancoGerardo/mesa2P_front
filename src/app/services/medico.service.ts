@@ -7,7 +7,7 @@ import { Medico } from '../models/medico.model';
   providedIn: 'root'
 })
 export class MedicoService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/medicos';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/medicos';
 
   constructor(private http: HttpClient) {}
 

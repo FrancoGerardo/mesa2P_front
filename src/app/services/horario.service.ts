@@ -8,7 +8,7 @@ import { Horario } from '../models/horario.model';
   providedIn: 'root'
 })
 export class HorarioService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/horarios';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/horarios';
 
   constructor(private http: HttpClient) {}
 

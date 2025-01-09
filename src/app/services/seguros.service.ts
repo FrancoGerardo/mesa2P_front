@@ -7,7 +7,7 @@ import { PagoSeguro } from '../models/pago-seguro.mode';
   providedIn: 'root',
 })
 export class SegurosService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/pagos-seguro';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/pagos-seguro';
 
   constructor(private http: HttpClient) {}
 

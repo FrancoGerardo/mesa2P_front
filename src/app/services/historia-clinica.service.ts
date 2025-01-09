@@ -22,7 +22,7 @@ export interface HistoriaClinicaResumen {
   providedIn: 'root'
 })
 export class HistoriaClinicaService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/historias-clinicas/resumen';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/historias-clinicas/resumen';
 
   constructor(private http: HttpClient) {}
 

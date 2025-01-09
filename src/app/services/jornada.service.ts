@@ -7,7 +7,7 @@ import { Jornada } from '../models/jornada.model';
   providedIn: 'root'
 })
 export class JornadaService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/jornadas';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/jornadas';
 
   constructor(private http: HttpClient) {}
 

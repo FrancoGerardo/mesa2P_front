@@ -7,7 +7,7 @@ import { Permission } from '../models/permission.model';
   providedIn: 'root'
 })
 export class PermissionService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/permisos';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/permisos';
 
   constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { RecetaMedicamento } from '../models/receta-medicamento.model';
   providedIn: 'root'
 })
 export class RecetaMedicamentoService {
-  private baseUrl = 'http://mesa2p2-production.up.railway.app/api/recetas-medicamentos';
+  private baseUrl = 'https://mesa2p2-production.up.railway.app/api/recetas-medicamentos';
 
   constructor(private http: HttpClient) {}
 

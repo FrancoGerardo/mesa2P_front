@@ -7,7 +7,7 @@ import { Paciente } from '../models/paciente.model';
   providedIn: 'root'
 })
 export class PacienteService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/pacientes';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/pacientes';
 
   constructor(private http: HttpClient) {}
 

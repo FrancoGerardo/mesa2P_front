@@ -8,7 +8,7 @@ import { Laboratorio } from '../models/laboratorio.model';
   providedIn: 'root'
 })
 export class LaboratorioService {
-  private apiUrl = 'http://mesa2p2-production.up.railway.app/api/laboratorio';
+  private apiUrl = 'https://mesa2p2-production.up.railway.app/api/laboratorio';
 
   constructor(private http: HttpClient) {}
 
